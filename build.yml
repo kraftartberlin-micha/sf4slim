@@ -1,0 +1,28 @@
+version: "3"
+services:
+  sf-php-cli:
+    build: docker/php-xdebug
+    environment:
+      PHP_EXTENSION_XDEBUG: 1
+    command: RUN pecl install xdebug && docker-php-ext-enable xdebug
+    volumes:
+      - .:/app
+    networks:
+      - my-sf-network-name
+
+  sf-composer:
+    image: composer:latest
+    volumes:
+      - .:/app
+    networks:
+      - my-sf-network-name
+
+  sf-phpstan:
+    image: phpstan/phpstan:latest
+    volumes:
+      - .:/app
+    networks:
+      - my-sf-network-name
+
+networks:
+  my-sf-network-name:
